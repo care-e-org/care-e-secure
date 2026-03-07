@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block title %}Hospital Registration — CARE-E{% endblock %}
+
+{% block content %}
+
+<!-- ═══════════════════════ SECTION: REGISTRATION FORM ═══════════════════════ -->
+<section class="py-5">
+  <div class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-12" style="max-width: 680px;">
+
+        <div class="card card-care p-4 p-md-5">
+
+          <!-- SECTION: Card Header -->
+          <div class="text-center mb-4">
+            <img
+              src="{{ url_for('static', filename='images/care-e-logo.jpg') }}"
+              alt="CARE-E Logo"
+              height="32"
+              class="mb-3 rounded"
+            >
+            <h2 class="fw-bold mb-1">Hospital Partner Registration</h2>
+            <p class="text-muted mb-0">Join the CARE-E emergency logistics network.</p>
+          </div>
+
+          <!-- SECTION: Registration Form -->
+          <form method="POST" action="/register/hospital" novalidate>
+            {{ form.hidden_tag() }}
+
+            <!-- Facility Name -->
+            <div class="form-floating mb-3">
+              {{ form.facility_name(class="form-control" + (" is-invalid" if form.facility_name.errors else ""), placeholder="Facility Name") }}
+              {{ form.facility_name.label }}
+              {% if form.facility_name.errors %}
+                {% for error in form.facility_name.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+
+            <!-- Organization Type -->
+            <div class="form-floating mb-3">
+              {{ form.organization_type(class="form-select" + (" is-invalid" if form.organization_type.errors else "")) }}
+              {{ form.organization_type.label }}
+              {% if form.organization_type.errors %}
+                {% for error in form.organization_type.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+
+            <!-- Contact Person -->
+            <div class="form-floating mb-3">
+              {{ form.contact_person(class="form-control" + (" is-invalid" if form.contact_person.errors else ""), placeholder="Contact Person") }}
+              {{ form.contact_person.label }}
+              {% if form.contact_person.errors %}
+                {% for error in form.contact_person.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+
+            <!-- Contact Email -->
+            <div class="form-floating mb-3">
+              {{ form.contact_email(class="form-control" + (" is-invalid" if form.contact_email.errors else ""), placeholder="Email Address") }}
+              {{ form.contact_email.label }}
+              {% if form.contact_email.errors %}
+                {% for error in form.contact_email.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+
+            <!-- Contact Phone -->
+            <div class="form-floating mb-3">
+              {{ form.contact_phone(class="form-control" + (" is-invalid" if form.contact_phone.errors else ""), placeholder="Phone Number") }}
+              {{ form.contact_phone.label }}
+              {% if form.contact_phone.errors %}
+                {% for error in form.contact_phone.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+
+            <!-- Facility Address (pickup_location) -->
+            <div class="form-floating mb-3">
+              {{ form.pickup_location(class="form-control" + (" is-invalid" if form.pickup_location.errors else ""), placeholder="Facility Address") }}
+              {{ form.pickup_location.label }}
+              {% if form.pickup_location.errors %}
+                {% for error in form.pickup_location.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+
+            <!-- Priority Level -->
+            <div class="form-floating mb-3">
+              {{ form.priority_level(class="form-select" + (" is-invalid" if form.priority_level.errors else "")) }}
+              {{ form.priority_level.label }}
+              {% if form.priority_level.errors %}
+                {% for error in form.priority_level.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+
+            <!-- Additional Notes -->
+            <div class="form-floating mb-3">
+              {{ form.notes(class="form-control" + (" is-invalid" if form.notes.errors else ""), placeholder="Additional Notes", style="height: 100px") }}
+              {{ form.notes.label }}
+              {% if form.notes.errors %}
+                {% for error in form.notes.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                {% endfor %}
+              {% endif %}
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid">
+              {{ form.submit(class="btn btn-care btn-lg w-100 mt-3 py-2 fw-semibold") }}
+            </div>
+
+          </form>
+
+          <!-- SECTION: Card Footer -->
+          <div class="text-center mt-4 pt-3 border-top">
+            <p class="text-muted small mb-0">
+              Already registered? Contact
+              <span class="fw-medium" style="color: var(--care-red);">support@care-e.health</span>
+            </p>
+          </div>
+
+        </div><!-- /card -->
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

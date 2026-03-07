@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Admin Login - CARE-E{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-4 col-sm-8 mt-5">
+    <div class="card shadow border-0 rounded-3">
+      <div class="card-body p-4 text-center">
+        <h4 class="mb-4 fw-bold" style="color: var(--care-dark);">Admin Secure Access</h4>
+        <form method="POST" action="">
+          {{ form.hidden_tag() }}
+          <div class="form-floating mb-3">
+            {{ form.username(class="form-control", placeholder="Username") }}
+            {{ form.username.label }}
+          </div>
+          <div class="form-floating mb-4">
+            {{ form.password(class="form-control", placeholder="Password") }}
+            {{ form.password.label }}
+          </div>
+          {{ form.submit(class="btn w-100 py-2 fw-semibold", style="background: var(--care-red); color: white; border-radius: 6px;") }}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

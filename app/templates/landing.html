@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+
+{% block title %}CARE-E — AI-Powered Emergency Medical Logistics{% endblock %}
+
+{% block content %}
+
+<!-- ═══════════════════════ SECTION: HERO ═══════════════════════ -->
+<section class="py-5" style="background-color: var(--care-dark);">
+  <div class="container py-5">
+    <div class="row align-items-center g-5">
+
+      <!-- Hero Text -->
+      <div class="col-lg-7">
+        <h1 class="display-4 fw-bold text-white mb-3">
+          When Minutes Decide Lives
+        </h1>
+        <p class="lead text-white opacity-75 mb-4" style="max-width: 540px;">
+          AI-powered cold-chain logistics for blood, vaccines, and organs —
+          delivered to where they're needed most.
+        </p>
+        <a href="/#partner" class="btn btn-care btn-lg px-4 py-2">
+          Partner With Us <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+      </div>
+
+      <!-- Hero Illustration (Inline SVG — no external URLs) -->
+      <div class="col-lg-5 text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 280" width="100%" style="max-width:380px;">
+          <!-- Circular backdrop -->
+          <circle cx="160" cy="140" r="120" fill="#C0152A" opacity=".12"/>
+          <!-- Route line -->
+          <path d="M60 200 Q100 80 160 120 T280 100" fill="none"
+                stroke="#C0152A" stroke-width="3" stroke-dasharray="8 6" opacity=".6"/>
+          <!-- Origin marker -->
+          <circle cx="60" cy="200" r="10" fill="#C0152A"/>
+          <circle cx="60" cy="200" r="5" fill="#fff"/>
+          <!-- Destination marker -->
+          <circle cx="280" cy="100" r="10" fill="#C0152A"/>
+          <circle cx="280" cy="100" r="5" fill="#fff"/>
+          <!-- Medical cross -->
+          <rect x="140" y="105" width="40" height="40" rx="6" fill="#fff"/>
+          <rect x="155" y="110" width="10" height="30" rx="2" fill="#C0152A"/>
+          <rect x="145" y="118" width="30" height="10" rx="2" fill="#C0152A" opacity=".85"/>
+          <!-- Snowflake / cold chain indicator -->
+          <text x="110" y="175" font-size="28" fill="#fff" opacity=".7">&#10052;</text>
+          <!-- Small truck outline -->
+          <rect x="210" y="145" width="50" height="28" rx="4" fill="#fff" opacity=".85"/>
+          <rect x="195" y="155" width="18" height="18" rx="3" fill="#fff" opacity=".85"/>
+          <circle cx="218" cy="177" r="6" fill="#1E2329"/>
+          <circle cx="248" cy="177" r="6" fill="#1E2329"/>
+          <rect x="216" y="153" width="10" height="10" rx="1" fill="#C0152A" opacity=".6"/>
+        </svg>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ SECTION: STATS BAR ═══════════════════════ -->
+<section class="py-4" style="background-color: var(--care-red);">
+  <div class="container">
+    <div class="row text-center text-white g-4">
+      <div class="col-md-4">
+        <h2 class="fw-bold mb-0 text-white">&lt; 45 min</h2>
+        <p class="mb-0 opacity-75">Average Response Time</p>
+      </div>
+      <div class="col-md-4">
+        <h2 class="fw-bold mb-0 text-white">99.8%</h2>
+        <p class="mb-0 opacity-75">Cold-Chain Integrity</p>
+      </div>
+      <div class="col-md-4">
+        <h2 class="fw-bold mb-0 text-white">500+</h2>
+        <p class="mb-0 opacity-75">Partner Facilities</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ SECTION: HOW IT WORKS ═══════════════════════ -->
+<section id="how-it-works" class="py-5">
+  <div class="container py-4">
+    <h2 class="text-center mb-2">How It Works</h2>
+    <p class="text-center text-muted mb-5">Three simple steps from request to delivery.</p>
+
+    <div class="row g-4">
+
+      <!-- Step 1 -->
+      <div class="col-md-4">
+        <div class="card card-care text-center p-4 h-100">
+          <div class="mb-3">
+            <span class="d-inline-flex align-items-center justify-content-center rounded-circle"
+                  style="width:56px;height:56px;background:var(--care-red);color:#fff;font-size:1.5rem;">
+              <i class="bi bi-clipboard2-pulse"></i>
+            </span>
+          </div>
+          <h5 class="fw-semibold">1. Request Raised</h5>
+          <p class="text-muted small mb-0">
+            A hospital or blood bank submits an emergency logistics request through the platform.
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="col-md-4">
+        <div class="card card-care text-center p-4 h-100">
+          <div class="mb-3">
+            <span class="d-inline-flex align-items-center justify-content-center rounded-circle"
+                  style="width:56px;height:56px;background:var(--care-red);color:#fff;font-size:1.5rem;">
+              <i class="bi bi-geo-alt"></i>
+            </span>
+          </div>
+          <h5 class="fw-semibold">2. Route Optimised</h5>
+          <p class="text-muted small mb-0">
+            Our AI engine finds the fastest cold-chain-compliant route and assigns the nearest transport unit.
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="col-md-4">
+        <div class="card card-care text-center p-4 h-100">
+          <div class="mb-3">
+            <span class="d-inline-flex align-items-center justify-content-center rounded-circle"
+                  style="width:56px;height:56px;background:var(--care-red);color:#fff;font-size:1.5rem;">
+              <i class="bi bi-check2-circle"></i>
+            </span>
+          </div>
+          <h5 class="fw-semibold">3. Delivered &amp; Logged</h5>
+          <p class="text-muted small mb-0">
+            The shipment is delivered with full temperature logging, and compliance records are stored securely.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ SECTION: WHAT WE CARRY ═══════════════════════ -->
+<section class="py-5" style="background-color: var(--care-light);">
+  <div class="container py-4">
+    <h2 class="text-center mb-2">What We Carry</h2>
+    <p class="text-center text-muted mb-5">Life-critical medical supplies, transported with precision.</p>
+
+    <div class="row g-4">
+
+      <div class="col-6 col-md-3">
+        <div class="card card-care text-center p-4 h-100">
+          <i class="bi bi-droplet-fill mb-3" style="font-size:2.2rem;color:var(--care-red);"></i>
+          <h6 class="fw-semibold mb-0">Blood Units</h6>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="card card-care text-center p-4 h-100">
+          <i class="bi bi-shield-plus mb-3" style="font-size:2.2rem;color:var(--care-red);"></i>
+          <h6 class="fw-semibold mb-0">Vaccines</h6>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="card card-care text-center p-4 h-100">
+          <i class="bi bi-capsule mb-3" style="font-size:2.2rem;color:var(--care-red);"></i>
+          <h6 class="fw-semibold mb-0">Medicines</h6>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="card card-care text-center p-4 h-100">
+          <i class="bi bi-heart-pulse mb-3" style="font-size:2.2rem;color:var(--care-red);"></i>
+          <h6 class="fw-semibold mb-0">Organ Transport</h6>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ SECTION: FAQ ═══════════════════════ -->
+<section class="py-5">
+  <div class="container py-4" style="max-width: 780px;">
+    <h2 class="text-center mb-2">Frequently Asked Questions</h2>
+    <p class="text-center text-muted mb-5">Everything you need to know before partnering with CARE-E.</p>
+
+    <div class="accordion" id="faqAccordion">
+
+      <!-- Q1 -->
+      <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden" style="border:1px solid #E2E8F0 !important;">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-semibold" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="false" aria-controls="faq1">
+            How do you maintain cold-chain integrity during transport?
+          </button>
+        </h2>
+        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-muted">
+            Every transport unit is equipped with IoT-enabled temperature sensors that log readings in real time.
+            If a deviation is detected, the system immediately alerts the operations team so corrective action can be taken before the shipment is compromised.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden" style="border:1px solid #E2E8F0 !important;">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-semibold" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+            What areas do you currently serve?
+          </button>
+        </h2>
+        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-muted">
+            We currently operate across major metropolitan areas and are actively expanding to Tier-2 cities.
+            Contact our partnerships team for details on coverage in your specific region.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden" style="border:1px solid #E2E8F0 !important;">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-semibold" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+            How quickly can we onboard as a partner?
+          </button>
+        </h2>
+        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-muted">
+            Most facilities are onboarded within 48 hours of submitting their application and completing verification.
+            Our team handles all the technical integration so your staff can start requesting shipments immediately.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden" style="border:1px solid #E2E8F0 !important;">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-semibold" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
+            Is our data secure on the platform?
+          </button>
+        </h2>
+        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body text-muted">
+            Absolutely. All data is encrypted in transit and at rest, and we follow healthcare-grade security practices including role-based access controls.
+            We undergo regular third-party security audits to ensure compliance with industry standards.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════ SECTION: PARTNER CTA ═══════════════════════ -->
+<section id="partner" class="py-5" style="background-color: var(--care-light);">
+  <div class="container py-4">
+    <h2 class="text-center mb-2">Partner With Us</h2>
+    <p class="text-center text-muted mb-5">Join a growing network of hospitals and logistics providers saving lives together.</p>
+
+    <div class="row g-4 justify-content-center">
+
+      <!-- Hospital Card -->
+      <div class="col-md-6 col-lg-5">
+        <div class="card h-100 border-0 text-white p-4 p-lg-5 rounded-3" style="background-color: var(--care-dark);">
+          <div class="mb-3">
+            <i class="bi bi-hospital" style="font-size: 2.5rem;"></i>
+          </div>
+          <h3 class="fw-bold text-white">Partner as a Hospital</h3>
+          <p class="opacity-75 mb-4">Register your facility to request emergency logistics and join our verified network.</p>
+          <a href="/register/hospital" class="btn btn-care btn-lg mt-auto align-self-start px-4">
+            Register Facility <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Supplier Card -->
+      <div class="col-md-6 col-lg-5">
+        <div class="card h-100 border-0 text-white p-4 p-lg-5 rounded-3" style="background-color: var(--care-red);">
+          <div class="mb-3">
+            <i class="bi bi-truck" style="font-size: 2.5rem;"></i>
+          </div>
+          <h3 class="fw-bold text-white">Partner as a Supplier</h3>
+          <p class="opacity-75 mb-4">Join our network as a certified cold-chain logistics provider.</p>
+          <a href="/register/supplier" class="btn btn-care-outline btn-lg mt-auto align-self-start px-4">
+            Apply as Supplier <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}CARE-E{% endblock %}</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="{{ url_for('static', filename='images/care-e-logo.jpg') }}">
+
+  <!-- Bootstrap 5 CSS CDN -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  >
+
+  <!-- Bootstrap Icons CDN -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+  >
+
+  <!-- Google Fonts — Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- CARE-E Design System Overrides -->
+  <style>
+    :root {
+      --care-red:   #C0152A;
+      --care-dark:  #1E2329;
+      --care-slate: #4A5568;
+      --care-light: #F7FAFC;
+      --care-white: #FFFFFF;
+
+      /* Bootstrap variable overrides */
+      --bs-primary:       var(--care-red);
+      --bs-primary-rgb:   192, 21, 42;
+      --bs-body-font-family: 'Inter', sans-serif;
+      --bs-body-color:    var(--care-slate);
+      --bs-body-bg:       var(--care-light);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      color: var(--care-slate);
+      background-color: var(--care-light);
+    }
+
+    h1, h2, h3, h4, h5, h6 { font-weight: 600; color: var(--care-dark); }
+
+    /* Primary button */
+    .btn-care {
+      background-color: var(--care-red);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-weight: 500;
+      transition: opacity .2s ease;
+    }
+    .btn-care:hover, .btn-care:focus { background-color: #a01124; color: #fff; }
+
+    .btn-care-outline {
+      background-color: var(--care-white);
+      color: var(--care-red);
+      border: 2px solid var(--care-white);
+      border-radius: 6px;
+      font-weight: 500;
+    }
+    .btn-care-outline:hover { background-color: #f0f0f0; color: var(--care-red); }
+
+    /* Override default Bootstrap .btn-primary so any existing usage also gets care-red */
+    .btn-primary {
+      background-color: var(--care-red) !important;
+      border-color: var(--care-red) !important;
+      border-radius: 6px;
+    }
+    .btn-primary:hover { background-color: #a01124 !important; border-color: #a01124 !important; }
+
+    /* Card style */
+    .card-care {
+      background: var(--care-white);
+      border: 1px solid #E2E8F0;
+      border-radius: 0.75rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    }
+
+    /* Navbar */
+    .navbar-care {
+      background-color: var(--care-dark) !important;
+    }
+
+    /* Footer */
+    .footer-care {
+      background-color: var(--care-dark);
+      color: rgba(255,255,255,.7);
+    }
+    .footer-care a { color: rgba(255,255,255,.85); text-decoration: none; }
+    .footer-care a:hover { color: #fff; }
+
+    /* Flash message container */
+    .flash-container { max-width: 960px; margin: 0 auto; }
+  </style>
+
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+  <!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-care sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center fw-bold" href="/">
+        <img
+          src="{{ url_for('static', filename='images/care-e-logo.jpg') }}"
+          alt="CARE-E Logo"
+          height="36"
+          class="me-2 rounded"
+        >
+        CARE-E
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarMain"
+        aria-controls="navbarMain"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/#how-it-works">How It Works</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/#partner">Partner With Us</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════ FLASH MESSAGES ═══════════════════════ -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-container px-3 pt-3">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- ═══════════════════════ MAIN CONTENT ═══════════════════════ -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+  <footer class="footer-care text-center py-5 mt-5">
+    <div class="container">
+      <img
+        src="{{ url_for('static', filename='images/care-e-logo.jpg') }}"
+        alt="CARE-E Logo"
+        height="48"
+        class="mb-3 rounded"
+      >
+      <p class="mb-1 fw-semibold text-white">Delivering Life. On Time.</p>
+      <p class="small mb-0 opacity-75">&copy; {{ now().year if now is defined else '2026' }} CARE-E. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 JS Bundle CDN -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmKfxOmxJVq5LpIXLMpILZkRfnpr"
+    crossorigin="anonymous"
+  ></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>
