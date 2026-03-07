@@ -1,24 +1,25 @@
 import os
 from dotenv import load_dotenv
 
-# Load the hidden variables from .env
 basedir = os.path.abspath(os.path.dirname(__file__))
 load_dotenv(os.path.join(basedir, '.env'))
 
 class Config:
-    # 1. Core Security
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
-    DEBUG = os.environ.get('FLASK_ENV') != 'production'
+    # Loads your Secret Key from .env or fails loudly
+    SECRET_KEY = os.environ.get('SECRET_KEY')
     
-    # 2. Database
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+    # Cloud Database Detection
+    database_url = os.environ.get('DATABASE_URL')
+    
+    # Fix for SQLAlchemy/Railway Postgres naming
+    if database_url and database_url.startswith('postgres://'):
+        database_url = database_url.replace('postgres://', 'postgresql://', 1)
+        
+    SQLALCHEMY_DATABASE_URI = database_url or \
         'sqlite:///' + os.path.join(basedir, 'instance', 'care_e.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # 3. Payload Limits (1MB limit for 4GB RAM safety)
-    MAX_CONTENT_LENGTH = 1 * 1024 * 1024 
-
-    # 4. Session Security
+    # Hardened Security Settings
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'
     PERMANENT_SESSION_LIFETIME = 1800

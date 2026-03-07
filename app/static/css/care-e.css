@@ -1,0 +1,138 @@
+/* ═══════ CARE-E Design System ═══════ */
+:root {
+  --care-red:   #C0152A;
+  --care-dark:  #1E2329;
+  --care-slate: #4A5568;
+  --care-light: #F7FAFC;
+  --care-white: #FFFFFF;
+
+  /* Bootstrap variable overrides */
+  --bs-primary:       var(--care-red);
+  --bs-primary-rgb:   192, 21, 42;
+  --bs-body-font-family: 'Inter', sans-serif;
+  --bs-body-color:    var(--care-slate);
+  --bs-body-bg:       var(--care-light);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  color: var(--care-slate);
+  background-color: var(--care-light);
+}
+
+h1, h2, h3, h4, h5, h6 { font-weight: 600; color: var(--care-dark); }
+
+/* Primary button */
+.btn-care {
+  background-color: var(--care-red);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: opacity .2s ease;
+}
+.btn-care:hover, .btn-care:focus { background-color: #a01124; color: #fff; }
+
+.btn-care-outline {
+  background-color: var(--care-white);
+  color: var(--care-red);
+  border: 2px solid var(--care-white);
+  border-radius: 6px;
+  font-weight: 500;
+}
+.btn-care-outline:hover { background-color: #f0f0f0; color: var(--care-red); }
+
+/* Override default Bootstrap .btn-primary so any existing usage also gets care-red */
+.btn-primary {
+  background-color: var(--care-red) !important;
+  border-color: var(--care-red) !important;
+  border-radius: 6px;
+}
+.btn-primary:hover { background-color: #a01124 !important; border-color: #a01124 !important; }
+
+/* Card style */
+.card-care {
+  background: var(--care-white);
+  border: 1px solid #E2E8F0;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+
+/* Navbar */
+.navbar-care {
+  background-color: var(--care-dark) !important;
+}
+
+/* Footer */
+.footer-care {
+  background-color: var(--care-dark);
+  color: rgba(255,255,255,.7);
+}
+.footer-care a { color: rgba(255,255,255,.85); text-decoration: none; }
+.footer-care a:hover { color: #fff; }
+
+/* Flash message container */
+.flash-container { max-width: 960px; margin: 0 auto; }
+
+/* ═══════ Landing — Carry Cards ═══════ */
+.carry-card {
+  border: 2px solid transparent;
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease;
+}
+.carry-card:hover {
+  background-color: #C0152A !important;
+  color: white !important;
+  border-color: #C0152A !important;
+}
+.carry-card:hover i { color: white !important; }
+.carry-card:hover h6 { color: white !important; }
+
+/* ═══════ Admin Layout ═══════ */
+.admin-wrapper { display: flex; min-height: calc(100vh - 72px); }
+
+.admin-sidebar {
+  width: 220px;
+  min-width: 220px;
+  background-color: var(--care-dark);
+  color: #fff;
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
+.admin-sidebar .sidebar-brand {
+  padding: 0 1.25rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  margin-bottom: .75rem;
+}
+.admin-sidebar .nav-link {
+  color: rgba(255,255,255,.65);
+  padding: .65rem 1.25rem;
+  font-size: .9rem;
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  transition: background .15s;
+}
+.admin-sidebar .nav-link:hover { color: #fff; background: rgba(255,255,255,.06); }
+.admin-sidebar .nav-link.active {
+  color: #fff;
+  background: var(--care-red);
+  font-weight: 500;
+}
+.admin-sidebar .nav-link i { font-size: 1.1rem; width: 20px; text-align: center; }
+.admin-sidebar .sidebar-footer { margin-top: auto; padding: 1rem 1.25rem 0; border-top: 1px solid rgba(255,255,255,.1); }
+
+.admin-main { flex: 1; overflow-x: auto; }
+
+/* Stat card accent */
+.stat-card { border-top: 3px solid var(--care-red); }
+
+/* Responsive: stack on small screens */
+@media (max-width: 991.98px) {
+  .admin-wrapper { flex-direction: column; }
+  .admin-sidebar { width: 100%; min-width: 100%; flex-direction: row; flex-wrap: wrap; padding: .75rem 0; }
+  .admin-sidebar .sidebar-brand { display: none; }
+  .admin-sidebar .nav-link { padding: .5rem 1rem; }
+  .admin-sidebar .sidebar-footer { margin-top: 0; border-top: none; padding: .5rem 1rem; }
+}

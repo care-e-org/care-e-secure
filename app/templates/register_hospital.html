@@ -15,7 +15,7 @@
           <!-- SECTION: Card Header -->
           <div class="text-center mb-4">
             <img
-              src="{{ url_for('static', filename='images/care-e-logo.jpg') }}"
+              src="{{ url_for('static', filename='images/care-e-logo.webp') }}"
               alt="CARE-E Logo"
               height="32"
               class="mb-3 rounded"
@@ -89,17 +89,6 @@
               {{ form.pickup_location.label }}
               {% if form.pickup_location.errors %}
                 {% for error in form.pickup_location.errors %}
-                  <div class="text-danger small mt-1">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-
-            <!-- Priority Level -->
-            <div class="form-floating mb-3">
-              {{ form.priority_level(class="form-select" + (" is-invalid" if form.priority_level.errors else "")) }}
-              {{ form.priority_level.label }}
-              {% if form.priority_level.errors %}
-                {% for error in form.priority_level.errors %}
                   <div class="text-danger small mt-1">{{ error }}</div>
                 {% endfor %}
               {% endif %}

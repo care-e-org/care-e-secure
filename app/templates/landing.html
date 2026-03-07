@@ -2,6 +2,8 @@
 
 {% block title %}CARE-E — AI-Powered Emergency Medical Logistics{% endblock %}
 
+{% block extra_css %}{% endblock %}
+
 {% block content %}
 
 <!-- ═══════════════════════ SECTION: HERO ═══════════════════════ -->
@@ -66,11 +68,11 @@
         <p class="mb-0 opacity-75">Average Response Time</p>
       </div>
       <div class="col-md-4">
-        <h2 class="fw-bold mb-0 text-white">99.8%</h2>
+        <h2 class="fw-bold mb-0 text-white">99%</h2>
         <p class="mb-0 opacity-75">Cold-Chain Integrity</p>
       </div>
       <div class="col-md-4">
-        <h2 class="fw-bold mb-0 text-white">500+</h2>
+        <h2 class="fw-bold mb-0 text-white">X+</h2>
         <p class="mb-0 opacity-75">Partner Facilities</p>
       </div>
     </div>
@@ -148,28 +150,28 @@
     <div class="row g-4">
 
       <div class="col-6 col-md-3">
-        <div class="card card-care text-center p-4 h-100">
+        <div class="card card-care carry-card text-center p-4 h-100">
           <i class="bi bi-droplet-fill mb-3" style="font-size:2.2rem;color:var(--care-red);"></i>
           <h6 class="fw-semibold mb-0">Blood Units</h6>
         </div>
       </div>
 
       <div class="col-6 col-md-3">
-        <div class="card card-care text-center p-4 h-100">
+        <div class="card card-care carry-card text-center p-4 h-100">
           <i class="bi bi-shield-plus mb-3" style="font-size:2.2rem;color:var(--care-red);"></i>
           <h6 class="fw-semibold mb-0">Vaccines</h6>
         </div>
       </div>
 
       <div class="col-6 col-md-3">
-        <div class="card card-care text-center p-4 h-100">
+        <div class="card card-care carry-card text-center p-4 h-100">
           <i class="bi bi-capsule mb-3" style="font-size:2.2rem;color:var(--care-red);"></i>
           <h6 class="fw-semibold mb-0">Medicines</h6>
         </div>
       </div>
 
       <div class="col-6 col-md-3">
-        <div class="card card-care text-center p-4 h-100">
+        <div class="card card-care carry-card text-center p-4 h-100">
           <i class="bi bi-heart-pulse mb-3" style="font-size:2.2rem;color:var(--care-red);"></i>
           <h6 class="fw-semibold mb-0">Organ Transport</h6>
         </div>
@@ -189,14 +191,14 @@
     <div class="accordion" id="faqAccordion">
 
       <!-- Q1 -->
-      <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden" style="border:1px solid #E2E8F0 !important;">
-        <h2 class="accordion-header">
+      <div class="accordion-item mb-2 rounded-3" style="border:1px solid #E2E8F0;">
+        <h2 class="accordion-header" id="faqHead1">
           <button class="accordion-button collapsed fw-semibold" type="button"
                   data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="false" aria-controls="faq1">
             How do you maintain cold-chain integrity during transport?
           </button>
         </h2>
-        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div id="faq1" class="accordion-collapse collapse" aria-labelledby="faqHead1" data-bs-parent="#faqAccordion">
           <div class="accordion-body text-muted">
             Every transport unit is equipped with IoT-enabled temperature sensors that log readings in real time.
             If a deviation is detected, the system immediately alerts the operations team so corrective action can be taken before the shipment is compromised.
@@ -205,14 +207,14 @@
       </div>
 
       <!-- Q2 -->
-      <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden" style="border:1px solid #E2E8F0 !important;">
-        <h2 class="accordion-header">
+      <div class="accordion-item mb-2 rounded-3" style="border:1px solid #E2E8F0;">
+        <h2 class="accordion-header" id="faqHead2">
           <button class="accordion-button collapsed fw-semibold" type="button"
                   data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
             What areas do you currently serve?
           </button>
         </h2>
-        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div id="faq2" class="accordion-collapse collapse" aria-labelledby="faqHead2" data-bs-parent="#faqAccordion">
           <div class="accordion-body text-muted">
             We currently operate across major metropolitan areas and are actively expanding to Tier-2 cities.
             Contact our partnerships team for details on coverage in your specific region.
@@ -221,14 +223,14 @@
       </div>
 
       <!-- Q3 -->
-      <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden" style="border:1px solid #E2E8F0 !important;">
-        <h2 class="accordion-header">
+      <div class="accordion-item mb-2 rounded-3" style="border:1px solid #E2E8F0;">
+        <h2 class="accordion-header" id="faqHead3">
           <button class="accordion-button collapsed fw-semibold" type="button"
                   data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
             How quickly can we onboard as a partner?
           </button>
         </h2>
-        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div id="faq3" class="accordion-collapse collapse" aria-labelledby="faqHead3" data-bs-parent="#faqAccordion">
           <div class="accordion-body text-muted">
             Most facilities are onboarded within 48 hours of submitting their application and completing verification.
             Our team handles all the technical integration so your staff can start requesting shipments immediately.
@@ -237,14 +239,14 @@
       </div>
 
       <!-- Q4 -->
-      <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden" style="border:1px solid #E2E8F0 !important;">
-        <h2 class="accordion-header">
+      <div class="accordion-item mb-2 rounded-3" style="border:1px solid #E2E8F0;">
+        <h2 class="accordion-header" id="faqHead4">
           <button class="accordion-button collapsed fw-semibold" type="button"
                   data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
             Is our data secure on the platform?
           </button>
         </h2>
-        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+        <div id="faq4" class="accordion-collapse collapse" aria-labelledby="faqHead4" data-bs-parent="#faqAccordion">
           <div class="accordion-body text-muted">
             Absolutely. All data is encrypted in transit and at rest, and we follow healthcare-grade security practices including role-based access controls.
             We undergo regular third-party security audits to ensure compliance with industry standards.
@@ -267,13 +269,13 @@
 
       <!-- Hospital Card -->
       <div class="col-md-6 col-lg-5">
-        <div class="card h-100 border-0 text-white p-4 p-lg-5 rounded-3" style="background-color: var(--care-dark);">
+        <div class="card h-100 border-0 text-white p-4 p-lg-5 rounded-3" style="background-color: var(--care-red);">
           <div class="mb-3">
             <i class="bi bi-hospital" style="font-size: 2.5rem;"></i>
           </div>
           <h3 class="fw-bold text-white">Partner as a Hospital</h3>
           <p class="opacity-75 mb-4">Register your facility to request emergency logistics and join our verified network.</p>
-          <a href="/register/hospital" class="btn btn-care btn-lg mt-auto align-self-start px-4">
+          <a href="/register/hospital" class="btn btn-care-outline btn-lg mt-auto align-self-start px-4">
             Register Facility <i class="bi bi-arrow-right ms-1"></i>
           </a>
         </div>
@@ -281,7 +283,7 @@
 
       <!-- Supplier Card -->
       <div class="col-md-6 col-lg-5">
-        <div class="card h-100 border-0 text-white p-4 p-lg-5 rounded-3" style="background-color: var(--care-red);">
+        <div class="card h-100 border-0 text-white p-4 p-lg-5 rounded-3" style="background-color: #123caf;">
           <div class="mb-3">
             <i class="bi bi-truck" style="font-size: 2.5rem;"></i>
           </div>

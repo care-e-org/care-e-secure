@@ -6,7 +6,7 @@
   <title>{% block title %}CARE-E{% endblock %}</title>
 
   <!-- Favicon -->
-  <link rel="icon" href="{{ url_for('static', filename='images/care-e-logo.jpg') }}">
+  <link rel="icon" href="{{ url_for('static', filename='images/care-e-logo.webp') }}">
 
   <!-- Bootstrap 5 CSS CDN -->
   <link
@@ -20,6 +20,8 @@
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+"
+    crossorigin="anonymous"
   >
 
   <!-- Google Fonts — Inter -->
@@ -30,84 +32,8 @@
     rel="stylesheet"
   >
 
-  <!-- CARE-E Design System Overrides -->
-  <style>
-    :root {
-      --care-red:   #C0152A;
-      --care-dark:  #1E2329;
-      --care-slate: #4A5568;
-      --care-light: #F7FAFC;
-      --care-white: #FFFFFF;
-
-      /* Bootstrap variable overrides */
-      --bs-primary:       var(--care-red);
-      --bs-primary-rgb:   192, 21, 42;
-      --bs-body-font-family: 'Inter', sans-serif;
-      --bs-body-color:    var(--care-slate);
-      --bs-body-bg:       var(--care-light);
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      font-weight: 400;
-      color: var(--care-slate);
-      background-color: var(--care-light);
-    }
-
-    h1, h2, h3, h4, h5, h6 { font-weight: 600; color: var(--care-dark); }
-
-    /* Primary button */
-    .btn-care {
-      background-color: var(--care-red);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-weight: 500;
-      transition: opacity .2s ease;
-    }
-    .btn-care:hover, .btn-care:focus { background-color: #a01124; color: #fff; }
-
-    .btn-care-outline {
-      background-color: var(--care-white);
-      color: var(--care-red);
-      border: 2px solid var(--care-white);
-      border-radius: 6px;
-      font-weight: 500;
-    }
-    .btn-care-outline:hover { background-color: #f0f0f0; color: var(--care-red); }
-
-    /* Override default Bootstrap .btn-primary so any existing usage also gets care-red */
-    .btn-primary {
-      background-color: var(--care-red) !important;
-      border-color: var(--care-red) !important;
-      border-radius: 6px;
-    }
-    .btn-primary:hover { background-color: #a01124 !important; border-color: #a01124 !important; }
-
-    /* Card style */
-    .card-care {
-      background: var(--care-white);
-      border: 1px solid #E2E8F0;
-      border-radius: 0.75rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,.06);
-    }
-
-    /* Navbar */
-    .navbar-care {
-      background-color: var(--care-dark) !important;
-    }
-
-    /* Footer */
-    .footer-care {
-      background-color: var(--care-dark);
-      color: rgba(255,255,255,.7);
-    }
-    .footer-care a { color: rgba(255,255,255,.85); text-decoration: none; }
-    .footer-care a:hover { color: #fff; }
-
-    /* Flash message container */
-    .flash-container { max-width: 960px; margin: 0 auto; }
-  </style>
+  <!-- CARE-E Design System -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/care-e.css') }}">
 
   {% block extra_css %}{% endblock %}
 </head>
@@ -118,10 +44,12 @@
     <div class="container">
       <a class="navbar-brand d-flex align-items-center fw-bold" href="/">
         <img
-          src="{{ url_for('static', filename='images/care-e-logo.jpg') }}"
+          src="{{ url_for('static', filename='images/care-e-logo.webp') }}"
           alt="CARE-E Logo"
           height="36"
+          width="36"
           class="me-2 rounded"
+          loading="eager"
         >
         CARE-E
       </a>
@@ -137,13 +65,15 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarMain">
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto align-items-center">
           <li class="nav-item">
             <a class="nav-link" href="/">Home</a>
           </li>
+          <li class="nav-item text-white opacity-50 d-none d-lg-block px-1">|</li>
           <li class="nav-item">
             <a class="nav-link" href="/#how-it-works">How It Works</a>
           </li>
+          <li class="nav-item text-white opacity-50 d-none d-lg-block px-1">|</li>
           <li class="nav-item">
             <a class="nav-link" href="/#partner">Partner With Us</a>
           </li>
@@ -175,10 +105,12 @@
   <footer class="footer-care text-center py-5 mt-5">
     <div class="container">
       <img
-        src="{{ url_for('static', filename='images/care-e-logo.jpg') }}"
+        src="{{ url_for('static', filename='images/care-e-logo.webp') }}"
         alt="CARE-E Logo"
         height="48"
+        width="48"
         class="mb-3 rounded"
+        loading="lazy"
       >
       <p class="mb-1 fw-semibold text-white">Delivering Life. On Time.</p>
       <p class="small mb-0 opacity-75">&copy; {{ now().year if now is defined else '2026' }} CARE-E. All rights reserved.</p>
@@ -190,6 +122,7 @@
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmKfxOmxJVq5LpIXLMpILZkRfnpr"
     crossorigin="anonymous"
+    nonce="{{ csp_nonce() }}"
   ></script>
   {% block extra_scripts %}{% endblock %}
 </body>

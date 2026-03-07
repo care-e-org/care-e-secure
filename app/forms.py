@@ -14,7 +14,6 @@ class HospitalRegistrationForm(FlaskForm):
     contact_email = StringField('Email Address', validators=[DataRequired(), Email(), Length(max=120)])
     contact_phone = StringField('Phone Number', validators=[DataRequired(), Length(max=20)])
     pickup_location = StringField('Facility Address', validators=[DataRequired(), Length(max=200)])
-    priority_level = SelectField('Priority Level', choices=[('Routine', 'Routine'), ('Urgent', 'Urgent'), ('Critical', 'Critical')], validators=[DataRequired()])
     notes = TextAreaField('Additional Notes', validators=[Length(max=500)])
     submit = SubmitField('Register as Hospital')
 
@@ -27,6 +26,5 @@ class SupplierRegistrationForm(FlaskForm):
     operating_zone = StringField('Operating Region/Zone', validators=[DataRequired(), Length(max=200)])
     cold_storage_capacity = SelectField('Cold Storage Capacity', choices=[('small', 'Small (<500L)'), ('medium', 'Medium (500L-2000L)'), ('large', 'Large (>2000L)')], validators=[DataRequired()])
     temperature_capability = SelectField('Temperature Capability', choices=[('ambient', 'Ambient (15-25 C)'), ('refrigerated', 'Refrigerated (2-8 C)'), ('frozen', 'Frozen (-20 C)'), ('ultra_cold', 'Ultra-Cold (-70 C)')], validators=[DataRequired()])
-    priority_level = SelectField('Availability', choices=[('Routine', 'Routine'), ('Urgent', 'Urgent'), ('Critical', '24/7 Critical Response')], validators=[DataRequired()])
     notes = TextAreaField('Additional Notes', validators=[Length(max=500)])
     submit = SubmitField('Apply as Supplier')
