@@ -7,6 +7,8 @@ load_dotenv(os.path.join(basedir, '.env'))
 class Config:
     # Loads your Secret Key from .env or fails loudly
     SECRET_KEY = os.environ.get('SECRET_KEY')
+    if not SECRET_KEY:
+        raise RuntimeError("FATAL: SECRET_KEY environment variable is not set.")
     
     # Cloud Database Detection
     database_url = os.environ.get('DATABASE_URL')
