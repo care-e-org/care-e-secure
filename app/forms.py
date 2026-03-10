@@ -9,7 +9,7 @@ class LoginForm(FlaskForm):
 
 class HospitalRegistrationForm(FlaskForm):
     facility_name = StringField('Facility Name', validators=[DataRequired(), Length(max=100)])
-    organization_type = SelectField('Organization Type', choices=[('hospital', 'Hospital'), ('clinic', 'Clinic'), ('blood_bank', 'Blood Bank')], validators=[DataRequired()])
+    organization_type = SelectField('Organization Type', choices=[('hospital', 'Hospital'), ('clinic', 'Clinic')], validators=[DataRequired()])
     contact_person = StringField('Contact Person', validators=[DataRequired(), Length(max=100)])
     contact_email = StringField('Email Address', validators=[DataRequired(), Email(), Length(max=120)])
     contact_phone = StringField('Phone Number', validators=[DataRequired(), Length(max=20)])
@@ -19,7 +19,7 @@ class HospitalRegistrationForm(FlaskForm):
 
 class SupplierRegistrationForm(FlaskForm):
     facility_name = StringField('Company Name', validators=[DataRequired(), Length(max=100)])
-    organization_type = SelectField('Organization Type', choices=[('logistics', 'Logistics Provider'), ('fleet', 'Independent Fleet')], validators=[DataRequired()])
+    organization_type = SelectField('Organization Type', choices=[ ('blood_bank', 'Blood Bank'), ('logistics', 'Logistics Provider'), ('fleet', 'Independent Fleet')], validators=[DataRequired()])
     contact_person = StringField('Contact Person', validators=[DataRequired(), Length(max=100)])
     contact_email = StringField('Email Address', validators=[DataRequired(), Email(), Length(max=120)])
     contact_phone = StringField('Phone Number', validators=[DataRequired(), Length(max=20)])
