@@ -38,4 +38,4 @@ class SupplierPartner(db.Model):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return AdminUser.query.get(int(user_id))
+    return db.session.get(AdminUser, int(user_id))

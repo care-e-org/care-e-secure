@@ -1,7 +1,7 @@
 import logging
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required, current_user
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 import nh3
 from app import db, limiter
 from app.models import AdminUser, HospitalPartner, SupplierPartner
@@ -10,6 +10,10 @@ from app.forms import HospitalRegistrationForm, SupplierRegistrationForm, LoginF
 security_log = logging.getLogger('care_e.security')
 
 bp = Blueprint('main', __name__)
+
+# Dummy hash used to perform a constant-time comparison when the username does
+# not exist, preventing timing-based username enumeration.
+_DUMMY_HASH = generate_password_hash('dummy-sentinel-value')
 
 @bp.route('/')
 def index():
@@ -65,7 +69,9 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = AdminUser.query.filter_by(username=form.username.data).first()
-        if user and check_password_hash(user.password_hash, form.password.data):
+        password_hash = user.password_hash if user else _DUMMY_HASH
+        password_ok = check_password_hash(password_hash, form.password.data)
+        if user and password_ok:
             login_user(user, remember=False)
             security_log.info('Admin login succeeded for user=%s ip=%s', form.username.data, request.remote_addr)
             return redirect(url_for('main.dashboard'))
