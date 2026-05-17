@@ -84,10 +84,59 @@
 
       </div>
 
-      <!-- ═══════════════════════ SECTION: HOSPITAL APPLICATIONS TABLE ═══════════════════════ -->
+      <div class="card card-care mb-5" id="credentials-vault">
+        <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center gap-3 flex-wrap">
+          <h5 class="mb-0 fw-semibold"><i class="bi bi-shield-lock me-2" style="color:var(--care-red);"></i>Credential Vault</h5>
+          <input id="credentialSearch" type="search" class="form-control form-control-sm" style="max-width: 320px;" placeholder="Search facility, username, or type">
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0" id="credentialTable">
+            <thead class="table-light">
+              <tr>
+                <th>Type</th>
+                <th>Facility</th>
+                <th>Username</th>
+                <th>Temporary Password</th>
+                <th>Status</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for cred in credential_vault %}
+              <tr class="cred-row" data-search="{{ (cred.partner_type ~ ' ' ~ cred.facility_name ~ ' ' ~ cred.username)|lower }}">
+                <td><span class="badge bg-secondary">{{ cred.partner_type|title }}</span></td>
+                <td>{{ cred.facility_name }}</td>
+                <td class="cred-username">{{ cred.username }}</td>
+                <td class="cred-temp-pass">{{ cred.temp_password if cred.temp_password else 'Not available - reset required' }}</td>
+                <td>
+                  {% if cred.must_change_password %}
+                  <span class="badge bg-warning text-dark">Temp password active</span>
+                  {% else %}
+                  <span class="badge bg-success">Password changed</span>
+                  {% endif %}
+                </td>
+                <td class="text-end text-nowrap">
+                  <button type="button" class="btn btn-sm btn-outline-dark copy-username me-1" title="Copy Username"><i class="bi bi-person-badge"></i></button>
+                  <button type="button" class="btn btn-sm btn-outline-primary copy-password" title="Copy Temp Password"><i class="bi bi-clipboard"></i></button>
+                </td>
+              </tr>
+              {% endfor %}
+              {% if not credential_vault %}
+              <tr>
+                <td colspan="6" class="text-center text-muted py-4">
+                  <i class="bi bi-inbox me-1"></i> No approved credentials yet.
+                </td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════ SECTION: PENDING HOSPITAL APPLICATIONS TABLE ═══════════════════════ -->
       <div class="card card-care mb-5">
         <div class="card-header bg-white border-bottom py-3">
-          <h5 class="mb-0 fw-semibold"><i class="bi bi-hospital me-2" style="color:var(--care-red);"></i>Hospital Applications</h5>
+          <h5 class="mb-0 fw-semibold"><i class="bi bi-hourglass-split me-2" style="color:var(--care-red);"></i>Pending Hospital Applications</h5>
         </div>
         <div class="table-responsive">
           <table class="table table-hover align-middle mb-0">
@@ -106,7 +155,10 @@
               </tr>
             </thead>
             <tbody>
+              {% set pending_hospital_count = namespace(value=0) %}
               {% for app in hospital_apps.items %}
+              {% if app.status != 'Approved' %}
+              {% set pending_hospital_count.value = pending_hospital_count.value + 1 %}
               <tr>
                 <td class="fw-medium">{{ app.id }}</td>
                 <td>{{ app.facility_name }}</td>
@@ -116,8 +168,16 @@
                 <td>{{ app.contact_phone }}</td>
                 <td>{{ app.pickup_location }}</td>
                 <td>{{ app.submitted_at.strftime('%d %b %Y') }}</td>
-                <td><span class="badge bg-warning text-dark">{{ app.status }}</span></td>
+                <td>
+                  <span class="badge bg-warning text-dark">{{ app.status }}</span>
+                </td>
                 <td class="text-end text-nowrap">
+                  <form method="POST" action="/admin/hospital/{{ app.id }}/approve" class="d-inline me-1">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-sm btn-success" title="Approve">
+                      <i class="bi bi-check2-circle"></i>
+                    </button>
+                  </form>
                   <form method="POST" action="/admin/hospital/{{ app.id }}/delete" class="d-inline">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
@@ -126,11 +186,12 @@
                   </form>
                 </td>
               </tr>
+              {% endif %}
               {% endfor %}
-              {% if not hospital_apps.items %}
+              {% if pending_hospital_count.value == 0 %}
               <tr>
                 <td colspan="10" class="text-center text-muted py-4">
-                  <i class="bi bi-inbox me-1"></i> No applications yet.
+                  <i class="bi bi-check-circle me-1"></i> No pending hospital applications.
                 </td>
               </tr>
               {% endif %}
@@ -162,10 +223,81 @@
         {% endif %}
       </div>
 
-      <!-- ═══════════════════════ SECTION: SUPPLIER APPLICATIONS TABLE ═══════════════════════ -->
+      <!-- ═══════════════════════ SECTION: APPROVED HOSPITAL APPLICATIONS TABLE ═══════════════════════ -->
+      <div class="card card-care mb-5">
+        <div class="card-header bg-white border-bottom py-3">
+          <h5 class="mb-0 fw-semibold"><i class="bi bi-patch-check me-2" style="color:var(--care-red);"></i>Approved Hospital Applications</h5>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>ID</th>
+                <th>Facility Name</th>
+                <th>Type</th>
+                <th>Contact Person</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Location</th>
+                <th>Submitted</th>
+                <th>Status</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% set approved_hospital_count = namespace(value=0) %}
+              {% for app in hospital_apps.items %}
+              {% if app.status == 'Approved' %}
+              {% set approved_hospital_count.value = approved_hospital_count.value + 1 %}
+              <tr>
+                <td class="fw-medium">{{ app.id }}</td>
+                <td>{{ app.facility_name }}</td>
+                <td><span class="badge bg-secondary">{{ app.organization_type }}</span></td>
+                <td>{{ app.contact_person }}</td>
+                <td>{{ app.contact_email }}</td>
+                <td>{{ app.contact_phone }}</td>
+                <td>{{ app.pickup_location }}</td>
+                <td>{{ app.submitted_at.strftime('%d %b %Y') }}</td>
+                <td>
+                  <span class="badge bg-success">Approved</span>
+                  {% if hospital_credentials.get(app.id) %}
+                    <div class="small text-muted mt-1">User: {{ hospital_credentials[app.id].username }}</div>
+                    <div class="small text-muted">Temp pass: {{ hospital_credentials[app.id].temp_password or 'Not available - reset required' }}</div>
+                  {% endif %}
+                </td>
+                <td class="text-end text-nowrap">
+                  <form method="POST" action="/admin/hospital/{{ app.id }}/reset-temp-password" class="d-inline me-1">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-sm btn-outline-primary" title="Reset Temp Password">
+                      <i class="bi bi-key"></i>
+                    </button>
+                  </form>
+                  <form method="POST" action="/admin/hospital/{{ app.id }}/delete" class="d-inline">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+              {% if approved_hospital_count.value == 0 %}
+              <tr>
+                <td colspan="10" class="text-center text-muted py-4">
+                  <i class="bi bi-inbox me-1"></i> No approved hospital applications in this page.
+                </td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════ SECTION: PENDING SUPPLIER APPLICATIONS TABLE ═══════════════════════ -->
       <div class="card card-care">
         <div class="card-header bg-white border-bottom py-3">
-          <h5 class="mb-0 fw-semibold"><i class="bi bi-truck me-2" style="color:var(--care-red);"></i>Supplier Applications</h5>
+          <h5 class="mb-0 fw-semibold"><i class="bi bi-hourglass-split me-2" style="color:var(--care-red);"></i>Pending Supplier Applications</h5>
         </div>
         <div class="table-responsive">
           <table class="table table-hover align-middle mb-0">
@@ -186,7 +318,10 @@
               </tr>
             </thead>
             <tbody>
+              {% set pending_supplier_count = namespace(value=0) %}
               {% for app in supplier_apps.items %}
+              {% if app.status != 'Approved' %}
+              {% set pending_supplier_count.value = pending_supplier_count.value + 1 %}
               <tr>
                 <td class="fw-medium">{{ app.id }}</td>
                 <td>{{ app.facility_name }}</td>
@@ -198,8 +333,16 @@
                 <td>{{ app.cold_storage_capacity }}</td>
                 <td>{{ app.temperature_capability }}</td>
                 <td>{{ app.submitted_at.strftime('%d %b %Y') }}</td>
-                <td><span class="badge bg-warning text-dark">{{ app.status }}</span></td>
+                <td>
+                  <span class="badge bg-warning text-dark">{{ app.status }}</span>
+                </td>
                 <td class="text-end text-nowrap">
+                  <form method="POST" action="/admin/supplier/{{ app.id }}/approve" class="d-inline me-1">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-sm btn-success" title="Approve">
+                      <i class="bi bi-check2-circle"></i>
+                    </button>
+                  </form>
                   <form method="POST" action="/admin/supplier/{{ app.id }}/delete" class="d-inline">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
@@ -208,11 +351,12 @@
                   </form>
                 </td>
               </tr>
+              {% endif %}
               {% endfor %}
-              {% if not supplier_apps.items %}
+              {% if pending_supplier_count.value == 0 %}
               <tr>
                 <td colspan="12" class="text-center text-muted py-4">
-                  <i class="bi bi-inbox me-1"></i> No applications yet.
+                  <i class="bi bi-check-circle me-1"></i> No pending supplier applications.
                 </td>
               </tr>
               {% endif %}
@@ -244,7 +388,123 @@
         {% endif %}
       </div>
 
+      <!-- ═══════════════════════ SECTION: APPROVED SUPPLIER APPLICATIONS TABLE ═══════════════════════ -->
+      <div class="card card-care mt-5">
+        <div class="card-header bg-white border-bottom py-3">
+          <h5 class="mb-0 fw-semibold"><i class="bi bi-patch-check me-2" style="color:var(--care-red);"></i>Approved Supplier Applications</h5>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>ID</th>
+                <th>Company</th>
+                <th>Type</th>
+                <th>Contact Person</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Operating Zone</th>
+                <th>Cold Storage</th>
+                <th>Temp Capability</th>
+                <th>Submitted</th>
+                <th>Status</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% set approved_supplier_count = namespace(value=0) %}
+              {% for app in supplier_apps.items %}
+              {% if app.status == 'Approved' %}
+              {% set approved_supplier_count.value = approved_supplier_count.value + 1 %}
+              <tr>
+                <td class="fw-medium">{{ app.id }}</td>
+                <td>{{ app.facility_name }}</td>
+                <td><span class="badge bg-secondary">{{ app.organization_type }}</span></td>
+                <td>{{ app.contact_person }}</td>
+                <td>{{ app.contact_email }}</td>
+                <td>{{ app.contact_phone }}</td>
+                <td>{{ app.operating_zone }}</td>
+                <td>{{ app.cold_storage_capacity }}</td>
+                <td>{{ app.temperature_capability }}</td>
+                <td>{{ app.submitted_at.strftime('%d %b %Y') }}</td>
+                <td>
+                  <span class="badge bg-success">Approved</span>
+                  {% if supplier_credentials.get(app.id) %}
+                    <div class="small text-muted mt-1">User: {{ supplier_credentials[app.id].username }}</div>
+                    <div class="small text-muted">Temp pass: {{ supplier_credentials[app.id].temp_password or 'Not available - reset required' }}</div>
+                  {% endif %}
+                </td>
+                <td class="text-end text-nowrap">
+                  <form method="POST" action="/admin/supplier/{{ app.id }}/reset-temp-password" class="d-inline me-1">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-sm btn-outline-primary" title="Reset Temp Password">
+                      <i class="bi bi-key"></i>
+                    </button>
+                  </form>
+                  <form method="POST" action="/admin/supplier/{{ app.id }}/delete" class="d-inline">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+              {% if approved_supplier_count.value == 0 %}
+              <tr>
+                <td colspan="12" class="text-center text-muted py-4">
+                  <i class="bi bi-inbox me-1"></i> No approved supplier applications in this page.
+                </td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div><!-- /p-4 -->
   </div><!-- /admin-main -->
 </div><!-- /admin-wrapper -->
+{% endblock %}
+
+{% block extra_scripts %}
+<script nonce="{{ csp_nonce() }}">
+  const searchInput = document.getElementById('credentialSearch');
+  const rows = Array.from(document.querySelectorAll('.cred-row'));
+
+  function copyText(value, successMessage) {
+    if (!value || value === 'Not available - reset required') {
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(value).then(() => alert(successMessage));
+      return;
+    }
+    const area = document.createElement('textarea');
+    area.value = value;
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand('copy');
+    document.body.removeChild(area);
+    alert(successMessage);
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      const term = searchInput.value.trim().toLowerCase();
+      rows.forEach((row) => {
+        const haystack = row.dataset.search || '';
+        row.style.display = haystack.includes(term) ? '' : 'none';
+      });
+    });
+  }
+
+  rows.forEach((row) => {
+    const username = row.querySelector('.cred-username')?.textContent?.trim() || '';
+    const tempPassword = row.querySelector('.cred-temp-pass')?.textContent?.trim() || '';
+    row.querySelector('.copy-username')?.addEventListener('click', () => copyText(username, 'Username copied'));
+    row.querySelector('.copy-password')?.addEventListener('click', () => copyText(tempPassword, 'Temp password copied'));
+  });
+</script>
 {% endblock %}

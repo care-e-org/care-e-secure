@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Partner Login - CARE-E{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-5 col-sm-10 mt-5">
+    <div class="card shadow border-0 rounded-3">
+      <div class="card-body p-4 p-md-5">
+        <h4 class="mb-2 fw-bold text-center" style="color: var(--care-dark);">Partner Secure Access</h4>
+        <p class="text-muted text-center mb-4">Approved hospitals and suppliers only.</p>
+        <form method="POST" action="">
+          {{ form.hidden_tag() }}
+          <div class="form-floating mb-3">
+            {{ form.username(class="form-control", placeholder="Username") }}
+            {{ form.username.label }}
+          </div>
+          <div class="form-floating mb-4">
+            {{ form.password(class="form-control", placeholder="Temporary Password") }}
+            {{ form.password.label }}
+          </div>
+          {{ form.submit(class="btn w-100 py-2 fw-semibold", style="background: var(--care-red); color: white; border-radius: 6px;") }}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

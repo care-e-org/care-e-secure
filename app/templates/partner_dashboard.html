@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block title %}Partner Dashboard - CARE-E{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+    <div>
+      <h2 class="fw-bold mb-1">Partner Dashboard</h2>
+      <p class="text-muted mb-0">Signed in as {{ source.facility_name }}</p>
+    </div>
+    <form method="POST" action="{{ url_for('main.partner_logout') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button class="btn btn-outline-danger">Logout</button>
+    </form>
+  </div>
+
+  {% if partner_type == 'hospital' %}
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <div class="card card-care h-100">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">Approved Suppliers</h5>
+        </div>
+        <div class="card-body">
+          {% if approved_suppliers %}
+            <div class="list-group list-group-flush">
+              {% for supplier in approved_suppliers %}
+              <div class="list-group-item d-flex justify-content-between align-items-start px-0">
+                <div class="me-3">
+                  <div class="fw-semibold">{{ supplier.username }}</div>
+                  <div class="text-muted small">{{ supplier.partner_type|title }} partner</div>
+                </div>
+                <form method="POST" action="{{ url_for('main.select_supplier', supplier_account_id=supplier.id) }}">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <button class="btn btn-sm btn-care">Select</button>
+                </form>
+              </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <p class="text-muted mb-0">No approved suppliers yet.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-7">
+      <div class="card card-care mb-4">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">Selected Suppliers</h5>
+        </div>
+        <div class="card-body">
+          {% if selected_suppliers %}
+            <ul class="mb-0">
+              {% for supplier in selected_suppliers %}
+              <li>{{ supplier.username }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="text-muted mb-0">Select suppliers to build your preferred network.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="card card-care">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">Supplier Uploads</h5>
+        </div>
+        <div class="card-body">
+          {% if supplier_offerings %}
+            <div class="row g-3">
+              {% for offering in supplier_offerings %}
+              <div class="col-12">
+                <div class="border rounded-3 p-3 h-100">
+                  <div class="d-flex justify-content-between gap-3">
+                    <div>
+                      <div class="fw-semibold">{{ offering.title }}</div>
+                      <div class="small text-muted">Quantity: {{ offering.quantity }} | Availability: {{ offering.availability }}</div>
+                    </div>
+                    <span class="badge bg-light text-dark">Supplier #{{ offering.supplier_account_id }}</span>
+                  </div>
+                  <p class="mb-0 mt-2">{{ offering.description }}</p>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <p class="text-muted mb-0">Supplier uploads will appear here once approved suppliers post them.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <div class="card card-care h-100">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">Upload Supplies</h5>
+        </div>
+        <div class="card-body">
+          <form method="POST" action="{{ url_for('main.upload_offering') }}">
+            {{ offering_form.hidden_tag() }}
+            <div class="form-floating mb-3">
+              {{ offering_form.title(class="form-control", placeholder="Supply Title") }}
+              {{ offering_form.title.label }}
+            </div>
+            <div class="form-floating mb-3">
+              {{ offering_form.description(class="form-control", style="height: 120px", placeholder="What is being supplied") }}
+              {{ offering_form.description.label }}
+            </div>
+            <div class="form-floating mb-3">
+              {{ offering_form.quantity(class="form-control", placeholder="Quantity / Capacity") }}
+              {{ offering_form.quantity.label }}
+            </div>
+            <div class="form-floating mb-3">
+              {{ offering_form.availability(class="form-select") }}
+              {{ offering_form.availability.label }}
+            </div>
+            <div class="d-grid">
+              {{ offering_form.submit(class="btn btn-care") }}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-7">
+      <div class="card card-care">
+        <div class="card-header bg-white">
+          <h5 class="mb-0">My Uploaded Supplies</h5>
+        </div>
+        <div class="card-body">
+          {% if own_offerings %}
+            <div class="list-group list-group-flush">
+              {% for offering in own_offerings %}
+              <div class="list-group-item px-0">
+                <div class="fw-semibold">{{ offering.title }}</div>
+                <div class="small text-muted mb-1">{{ offering.quantity }} | {{ offering.availability }}</div>
+                <div>{{ offering.description }}</div>
+              </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <p class="text-muted mb-0">No supplies uploaded yet.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

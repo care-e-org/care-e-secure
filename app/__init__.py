@@ -1,5 +1,5 @@
 import click
-from flask import Flask
+from flask import Flask, request, redirect, url_for
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -18,6 +18,13 @@ compress = Compress()
 
 login_manager.login_view = 'main.login'
 login_manager.login_message_category = 'info'
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    if request.path.startswith('/partner'):
+        return redirect(url_for('main.partner_login'))
+    return redirect(url_for('main.login'))
 
 # The Ultimate B2B CSP Whitelist
 csp = {

@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+instance_dir = os.path.join(basedir, 'instance')
+os.makedirs(instance_dir, exist_ok=True)
 load_dotenv(os.path.join(basedir, '.env'))
 
 class Config:
@@ -18,7 +20,7 @@ class Config:
         database_url = database_url.replace('postgres://', 'postgresql://', 1)
         
     SQLALCHEMY_DATABASE_URI = database_url or \
-        'sqlite:///' + os.path.join(basedir, 'instance', 'care_e.db')
+        'sqlite:///' + os.path.join(instance_dir, 'care_e.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # Hardened Security Settings
