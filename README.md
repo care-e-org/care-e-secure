@@ -154,30 +154,18 @@ Admin Dashboard (Flask-Login protected)
 git clone https://github.com/yourusername/care-e-secure.git
 cd care-e-secure
 
-# Create and activate virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Configure environment
-cp .env.example .env
-
-# Generate SECRET_KEY
-python3 -c "import secrets; print(secrets.token_hex(32))"
-# Paste output into .env as SECRET_KEY
-
-# Generate admin password hash
-python3 -c "from werkzeug.security import generate_password_hash; \
-print(generate_password_hash('your-strong-password'))"
-# Paste output into .env as ADMIN_PASSWORD_HASH
-
-# Run database migrations
-flask db upgrade
+# One command for offline local setup:
+# - creates venv
+# - installs requirements
+# - creates/updates .env with SECRET_KEY
+# - initializes SQLite DB
+# - creates admin user CARE-E_ADMIN / CARE-E-2026
+chmod +x setup_offline.sh
+./setup_offline.sh
 
 # Start the application
-python run.py
+source venv/bin/activate
+python3 run.py
 ```
 
 ---
